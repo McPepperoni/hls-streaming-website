@@ -1,0 +1,10 @@
+export const COLORS = {
+  DEFAULT: {
+    PRIMARY_BG: "#000",
+    PRIMARY_TEXT: "#fff",
+    PRIMARY_ELEMENT: "#25064C",
+    SECONDARY_ELEMENT: "#25064C",
+    PRIMARY_SUB_ELEMENT: "#9768D1",
+    SECONDARY_SUB_ELEMENT: "red",
+  },
+};
