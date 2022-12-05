@@ -1,11 +1,18 @@
 package main
 
 import (
+	"context"
+	firebaseInit "file-processing/src/firebaseInit"
 	loadDir "file-processing/src/loadDir"
+
+	// types "file-processing/src/types"
 	"fmt"
 	"log"
 	"os"
 	"os/exec"
+
+	"github.com/barasher/go-exiftool"
+	// "github.com/mitchellh/mapstructure"
 )
 
 func processVideo(path string, file string, resolution string, output string) {
@@ -18,6 +25,8 @@ func processVideo(path string, file string, resolution string, output string) {
 	arg := []string{
 		"-nologo",
 		"ffmpeg",
+		"-hide_banner",
+		"-y",
 		"-hwaccel",
 		"cuda",
 		"-hwaccel_output_format",
@@ -42,7 +51,10 @@ func processVideo(path string, file string, resolution string, output string) {
 		arg = []string{
 			"-nologo",
 			"ffmpeg",
+			"-hide_banner",
+			"-y",
 			"-hwaccel",
+
 			"cuda",
 			"-hwaccel_output_format",
 			"cuda",
@@ -78,24 +90,59 @@ func processVideo(path string, file string, resolution string, output string) {
 }
 
 func main() {
-	// path := "../../../Movie/Hereditary.2018.1080p.BluRay.H264.AAC-RARBG/"
+	homePath := "../../../Movie/"
 	// output := path + "output\\"
 
 	// processVideo(path, "Hereditary.2018.1080p.BluRay.H264.AAC-RARBG.mp4", "1280x720", output)
-	videos := loadDir.GetDir()
-
-	resolutions := []string{
-		"1920x1080",
-		"1280x720",
-		"720x480",
-		"640x360",
+	videos := loadDir.GetDir(homePath)
+	client := firebaseInit.Init()
+	et, err := exiftool.NewExiftool()
+	if err != nil {
+		fmt.Printf("Error when intializing: %v\n", err)
+		return
 	}
+	defer et.Close()
 
-	fmt.Println(len(videos))
+	// resolutions := []string{
+	// 	"",
+	// 	"1280x720",
+	// 	"720x480",
+	// 	"640x360",
+	// }
+
+	// fmt.Println(len(videos))
 
 	for _, v := range videos {
-		for _, resolution := range resolutions {
-			processVideo(v.Path, v.Name, resolution, v.Path+"output/")
+		// for _, resolution := range resolutions {
+		// 	processVideo(v.Path, v.Name + "." + v.Ext, resolution, v.Path + "output/")
+		// }
+		// fmt.Println(v.Path)
+
+		fmt.Println(v.Path)
+		fmt.Println(v.Name)
+
+		_, err := client.Collection("Media").Doc(v.Name).Set(context.Background(), &v)
+		if err != nil {
+			log.Fatalln(err)
 		}
+
+		// fileInfos := et.ExtractMetadata(homePath + v.Path + v.Name + "." + v.Ext)
+		// fmt.Printf("%v\n", fileInfos)
+
+		// for _, fileInfo := range fileInfos {
+		// 	if fileInfo.Err != nil {
+		// 		fmt.Printf("Error concerning %v: %v\n", fileInfo.File, fileInfo.Err)
+		// 		continue
+		// 	}
+
+		// 	metadata := types.Metadata{}
+		// 	err := mapstructure.Decode(fileInfo.Fields, &metadata)
+		// 	if err != nil {
+		// 		log.Fatalln(err)
+		// 	}
+
+		// }
 	}
+
+	defer client.Close()
 }

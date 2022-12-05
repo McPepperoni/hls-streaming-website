@@ -1,3 +1,3 @@
 package constants
 
-var Extensions = []string{"mp4"}
+var Extensions = []string{"mp4", "mkv"}
