@@ -1,4 +1,4 @@
-import styled from "styled-components/macro";
+import styled from "styled-components";
 import { COLORS } from "../../../constanst";
 import { TIconButton } from "../../../types/type";
 
@@ -8,13 +8,7 @@ type Props = {
 
 const IconButton = (props: Props) => {
   return (
-    <StyledButton
-      margin={props.button.margin}
-      followButton={props.button.followButton}
-      onClick={props.button.onClick}
-      color={props.button.color}
-      backgroundColor={props.button.backgroundColor}
-    >
+    <StyledButton {...props.button}>
       {props.button.icon}
       {props.button.hover ? (
         <StyledHover followButton={props.button.followButton}>
@@ -55,18 +49,31 @@ const StyledHover = styled.div<{ followButton?: boolean }>`
 
 const StyledButton = styled.button<{
   margin?: number;
+  position?: string;
+  top?: string;
+  bottom?: string;
+  left?: string;
+  right?: string;
   color?: string;
   backgroundColor?: string;
   followButton?: boolean;
+  transform?: string;
+  height?: string;
+  width?: string;
 }>`
   position: ${(props) => props.followButton && "relative"};
+  position: ${(props) => props.position};
+  top: ${(props) => props.top};
+  bottom: ${(props) => props.bottom};
+  left: ${(props) => props.left};
+  right: ${(props) => props.right};
+  transform: ${(props) => props.transform};
+  height: ${(props) => props.height};
+  width: ${(props) => props.width};
   padding: ${(props) => props.margin ?? 20}px;
 
-  ${StyledHover} {
-    /* bottom: ${(props) => `calc(100% + ${props.margin ?? 20}px)`}; */
-  }
-
   svg {
+    color: ${(props) => props.color ?? COLORS.DEFAULT.PRIMARY_TEXT};
     font-size: 50px;
   }
 

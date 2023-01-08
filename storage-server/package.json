@@ -1,0 +1,41 @@
+{
+  "name": "storage-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "@types/bcrypt": "^5.0.0",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.15",
+    "@types/fs-extra": "^9.0.13",
+    "@types/graphql": "^14.5.0",
+    "@types/http-errors": "^2.0.1",
+    "@types/jsonwebtoken": "^9.0.0",
+    "@types/mongoose": "^5.11.97",
+    "apollo-server-express": "^3.11.1",
+    "bcrypt": "^5.1.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "fs-extra": "^11.1.0",
+    "graphql-compose": "^9.0.10",
+    "graphql-compose-mongoose": "^9.7.2",
+    "graphql-tools": "^8.3.14",
+    "http": "^0.0.1-security",
+    "http-errors": "^2.0.0",
+    "https": "^1.0.0",
+    "jsonwebtoken": "^9.0.0",
+    "mongoose": "^6.8.2",
+    "mongoose-timestamp": "^0.6.0",
+    "nodemon": "^2.0.20",
+    "typescript": "^4.9.4"
+  },
+  "devDependencies": {
+    "@types/node": "^18.11.18",
+    "express-graphql": "^0.12.0",
+    "ts-node": "^10.9.1"
+  },
+  "scripts": {
+    "start": "nodemon server.ts"
+  }
+}

@@ -1,12 +1,16 @@
 import "./App.css";
-import VideoPlayer from "./components/templates/video-player/video-player";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Watch from "./pages/watch";
+import Browse from "./pages/browse";
 
 function App() {
   return (
-    <VideoPlayer
-      src="http://localhost:8080/output/output1920x1080_.m3u8"
-      title="Testing"
-    />
+    <Router>
+      <Routes>
+        <Route path="/watch" element={<Watch />} />
+        <Route path="/browse" element={<Browse />} />
+      </Routes>
+    </Router>
   );
 }
 

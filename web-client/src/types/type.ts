@@ -24,12 +24,25 @@ export type TVideoContext = {
 export type TIconButton = {
   icon: React.ReactNode;
   margin?: number;
+  position?: string;
   hover?: React.ReactNode;
   followButton?: boolean;
+
+  left?: string;
+  right?: string;
+  bottom?: string;
+  top?: string;
+  transform?: string;
+
+  height?: string;
+  width?: string;
 
   color?: string;
   backgroundColor?: string;
   onClick?: (e?: React.MouseEvent) => void;
+  disabled?: boolean;
+
+  style?: React.CSSProperties;
 };
 
 export type TSpeedAnchor = {
@@ -51,4 +64,26 @@ export type TEpisodeSelection = {
   desc: string;
   vidSrc: string;
   time: number;
+};
+
+type TMetadata = {
+  AudioChannels: number;
+  Duration: string;
+  ImageHeight: number;
+  ImageWidth: number;
+};
+
+type TSeries = {
+  Parent: string;
+  Season: string;
+};
+
+export type TContentItem = {
+  imgSrc: string;
+  path?: string;
+  name: string;
+  ext: string;
+  isSeries: string;
+  metadata: TMetadata;
+  series: TSeries;
 };
